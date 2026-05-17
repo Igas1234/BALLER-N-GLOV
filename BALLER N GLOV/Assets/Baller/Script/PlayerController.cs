@@ -91,7 +91,11 @@ public class PlayerController : MonoBehaviour
             TakeDamage(1);
         }
     }
-
+public void Heal(int amount)
+{
+    currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+    Debug.Log("Heal! Darah sekarang: " + currentHealth);
+}
     private void TakeDamage(int damage)
     {
         currentHealth -= damage;
