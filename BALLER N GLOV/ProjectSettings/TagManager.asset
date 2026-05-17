@@ -9,6 +9,7 @@ TagManager:
   - PunchHitbox
   - Serangan
   - Duri
+  - Kotak
   layers:
   - Default
   - TransparentFX
