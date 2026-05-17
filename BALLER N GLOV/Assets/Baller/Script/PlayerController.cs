@@ -14,6 +14,12 @@ public class PlayerController : MonoBehaviour
     public GameObject punchHitbox;     
     public float attackDuration = 0.2f; 
     private bool isAttacking = false;
+
+    [Header("Pengaturan Health")]
+    public int maxHealth = 3;
+    public int currentHealth;
+    public float invincibleTime = 1f;
+    private bool isInvincible = false;
     
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
@@ -23,7 +29,12 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>(); 
         
-        if (punchHitbox != null) punchHitbox.SetActive(false);
+        currentHealth = maxHealth;
+
+        if (punchHitbox != null) 
+        {
+            punchHitbox.SetActive(false);
+        }
     }
 
     void Update()
@@ -42,8 +53,7 @@ public class PlayerController : MonoBehaviour
             isGrounded = false; 
         }
 
-        // 3. MENONJOK (Ganti ke Klik Mouse Kiri)
-        // GetMouseButtonDown(0) adalah fungsi untuk mendeteksi klik kiri mouse
+        // 3. MENONJOK
         if (Input.GetMouseButtonDown(0) && !isAttacking)
         {
             StartCoroutine(AttackRoutine());
@@ -63,13 +73,51 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Lantai")) isGrounded = true;
-        if (collision.gameObject.CompareTag("Musuh")) StartCoroutine(DamageBlink()); 
+        if (collision.gameObject.CompareTag("Lantai")) 
+        {
+            isGrounded = true;
+        }
+
+        if (collision.gameObject.CompareTag("Musuh") && !isInvincible) 
+        {
+            TakeDamage(1);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Duri") && !isInvincible)
+        {
+            TakeDamage(1);
+        }
+    }
+
+    private void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        Debug.Log("Player kena damage! Sisa darah: " + currentHealth);
+
+        StartCoroutine(DamageBlink());
+        StartCoroutine(InvincibleRoutine());
+
+        if (currentHealth <= 0)
+        {
+            Debug.Log("Player mati!");
+            gameObject.SetActive(false);
+        }
+    }
+
+    private IEnumerator InvincibleRoutine()
+    {
+        isInvincible = true;
+        yield return new WaitForSeconds(invincibleTime);
+        isInvincible = false;
     }
 
     private IEnumerator DamageBlink()
     {
         int blinkCount = 4;
+
         for (int i = 0; i < blinkCount; i++)
         {
             spriteRenderer.enabled = false; 
