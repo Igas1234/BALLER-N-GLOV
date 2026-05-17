@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class LeverSwitch : MonoBehaviour
 {
-    public DoorController targetDoor;
+    [Header("Pintu yang Dibuka")]
+    public DoorController[] targetDoors;
 
     private bool playerNearby = false;
     private bool isActivated = false;
@@ -13,12 +14,20 @@ public class LeverSwitch : MonoBehaviour
         {
             isActivated = true;
 
-            if (targetDoor != null)
-            {
-                targetDoor.OpenDoor();
-            }
+            OpenAllDoors();
 
-            Debug.Log("Tuas ditekan dengan E, pintu terbuka!");
+            Debug.Log("Tuas ditekan dengan E, semua pintu terbuka!");
+        }
+    }
+
+    private void OpenAllDoors()
+    {
+        foreach (DoorController door in targetDoors)
+        {
+            if (door != null)
+            {
+                door.OpenDoor();
+            }
         }
     }
 
