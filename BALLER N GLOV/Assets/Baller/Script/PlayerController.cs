@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public float rotasiSpeed = 200f;
 
     private Rigidbody2D rb;
-    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer[] spriteRenderers;
     private bool isFacingRight = true;
     private PlayerAnimator playerAnimator;
 
@@ -34,51 +34,66 @@ public class PlayerController : MonoBehaviour
     {
         playerAnimator = GetComponent<PlayerAnimator>();
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // Mengambil semua SpriteRenderer dari player dan child-nya
+        // Contoh: badan, mata, pupil, dan asset visual lain
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
 
         currentHealth = maxHealth;
 
         if (punchHitbox != null)
+        {
             punchHitbox.SetActive(false);
+        }
     }
 
     void Update()
     {
-        Debug.Log("isGrounded: " + isGrounded);
-
-        // 1. JALAN & FLIP
+        // 1. JALAN
         float moveInput = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
 
-        if (moveInput != 0)
+        // 2. ROTASI BACKGROUND / BOLA
+        if (moveInput != 0 && backgroundRotate != null)
         {
             float rotasiArah = moveInput > 0 ? -1f : 1f;
             backgroundRotate.Rotate(0f, 0f, rotasiArah * rotasiSpeed * Time.deltaTime);
         }
 
-        if (moveInput > 0 && !isFacingRight) Flip();
-        else if (moveInput < 0 && isFacingRight) Flip();
+        // 3. FLIP ARAH SERANGAN
+        if (moveInput > 0 && !isFacingRight)
+        {
+            Flip();
+        }
+        else if (moveInput < 0 && isFacingRight)
+        {
+            Flip();
+        }
 
-        // 2. LOMPAT
+        // 4. LOMPAT
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
 
-            // Panggil animasi lompat dari sini
             if (playerAnimator != null)
+            {
                 playerAnimator.TriggerLompat();
+            }
         }
 
-        // 3. MENONJOK
+        // 5. MENYERANG
         if (Input.GetMouseButtonDown(0) && !isAttacking)
+        {
             StartCoroutine(AttackRoutine());
+        }
     }
 
     private void Flip()
     {
         isFacingRight = !isFacingRight;
 
+        // Membalik posisi hitbox serangan ke arah player menghadap
         if (punchHitbox != null)
         {
             Vector3 pos = punchHitbox.transform.localPosition;
@@ -89,27 +104,44 @@ public class PlayerController : MonoBehaviour
     private IEnumerator AttackRoutine()
     {
         isAttacking = true;
-        punchHitbox.SetActive(true);
+
+        if (punchHitbox != null)
+        {
+            punchHitbox.SetActive(true);
+        }
 
         yield return new WaitForSeconds(attackDuration);
 
-        punchHitbox.SetActive(false);
+        if (punchHitbox != null)
+        {
+            punchHitbox.SetActive(false);
+        }
+
         isAttacking = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // Menyentuh lantai
         if (collision.gameObject.CompareTag("Lantai"))
+        {
             isGrounded = true;
+        }
 
+        // Menyentuh musuh
         if (collision.gameObject.CompareTag("Musuh") && !isInvincible)
+        {
             TakeDamage(1);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // Menyentuh duri / trap / shuriken kalau pakai tag Duri
         if (collision.gameObject.CompareTag("Duri") && !isInvincible)
+        {
             TakeDamage(1);
+        }
     }
 
     public void Heal(int amount)
@@ -136,7 +168,9 @@ public class PlayerController : MonoBehaviour
     private IEnumerator InvincibleRoutine()
     {
         isInvincible = true;
+
         yield return new WaitForSeconds(invincibleTime);
+
         isInvincible = false;
     }
 
@@ -146,9 +180,26 @@ public class PlayerController : MonoBehaviour
 
         for (int i = 0; i < blinkCount; i++)
         {
-            spriteRenderer.enabled = false;
+            // Matikan semua sprite visual player
+            foreach (SpriteRenderer sr in spriteRenderers)
+            {
+                if (sr != null)
+                {
+                    sr.enabled = false;
+                }
+            }
+
             yield return new WaitForSeconds(0.1f);
-            spriteRenderer.enabled = true;
+
+            // Hidupkan semua sprite visual player
+            foreach (SpriteRenderer sr in spriteRenderers)
+            {
+                if (sr != null)
+                {
+                    sr.enabled = true;
+                }
+            }
+
             yield return new WaitForSeconds(0.1f);
         }
     }
