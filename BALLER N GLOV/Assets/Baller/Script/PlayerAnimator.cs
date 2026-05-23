@@ -4,30 +4,54 @@ public class PlayerAnimator : MonoBehaviour
 {
     private Animator animator;
     private PlayerController playerController;
+    private Rigidbody2D rb;
+    private bool sudahLompat = false;
+    private float maxHeightY = 0f;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         playerController = GetComponent<PlayerController>();
-    }
-
-    public void TriggerLompat()
-    {
-        animator.ResetTrigger("jalan");
-        animator.SetTrigger("lompat");
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
+        float velocityY = rb.velocity.y;
         float moveInput = Input.GetAxisRaw("Horizontal");
         bool isGrounded = playerController.isGrounded;
 
-        animator.SetBool("Floating", !isGrounded);
-        animator.SetBool("Idle", isGrounded && moveInput == 0);
+        // Tracking posisi Y tertinggi saat di udara
+        if (!isGrounded)
+            maxHeightY = Mathf.Max(maxHeightY, transform.position.y);
 
-        if (isGrounded && moveInput != 0)
-            animator.SetTrigger("jalan");
-        else
-            animator.ResetTrigger("jalan");
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+            sudahLompat = true;
+
+        // Jatuh biasa dari ketinggian cukup
+        float jatuhThreshold = 3f; // sesuaikan, makin besar makin tinggi syaratnya
+        if (!isGrounded && !sudahLompat && (transform.position.y < maxHeightY - jatuhThreshold))
+            sudahLompat = true;
+
+        // Reset
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        if (stateInfo.IsName("Jatuh") && stateInfo.normalizedTime >= 0.9f)
+        {
+            sudahLompat = false;
+            maxHeightY = 0f;
+        }
+        if (stateInfo.IsName("Serang") && stateInfo.normalizedTime >= 0.9f)
+            animator.ResetTrigger("serang");
+
+        if (isGrounded) maxHeightY = 0f;
+
+        if (Input.GetMouseButtonDown(0))
+            animator.SetTrigger("serang");
+
+
+        animator.SetFloat("velocityY", velocityY);
+        animator.SetFloat("moveInput", Mathf.Abs(moveInput));
+        animator.SetBool("isGrounded", isGrounded);
+        animator.SetBool("sudahLompat", sudahLompat);
     }
 }

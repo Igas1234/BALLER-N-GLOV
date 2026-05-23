@@ -22,8 +22,6 @@ public class PlayerController : MonoBehaviour
     private bool isInvincible = false;
 
     [Header("Referensi")]
-    public Transform backgroundRotate;
-    public float rotasiSpeed = 200f;
 
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
@@ -40,21 +38,17 @@ public class PlayerController : MonoBehaviour
 
         if (punchHitbox != null)
             punchHitbox.SetActive(false);
+
+        isGrounded = false;
     }
 
     void Update()
     {
-        Debug.Log("isGrounded: " + isGrounded);
+        //Debug.Log("isGrounded: " + isGrounded);
 
         // 1. JALAN & FLIP
         float moveInput = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
-
-        if (moveInput != 0)
-        {
-            float rotasiArah = moveInput > 0 ? -1f : 1f;
-            backgroundRotate.Rotate(0f, 0f, rotasiArah * rotasiSpeed * Time.deltaTime);
-        }
 
         if (moveInput > 0 && !isFacingRight) Flip();
         else if (moveInput < 0 && isFacingRight) Flip();
@@ -63,11 +57,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            isGrounded = false;
-
-            // Panggil animasi lompat dari sini
-            if (playerAnimator != null)
-                playerAnimator.TriggerLompat();
         }
 
         // 3. MENONJOK
@@ -111,6 +100,13 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Duri") && !isInvincible)
             TakeDamage(1);
     }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Lantai"))
+            isGrounded = false;
+    }
+
 
     public void Heal(int amount)
     {
