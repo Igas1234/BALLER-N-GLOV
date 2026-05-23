@@ -5,6 +5,7 @@ public class DoorController : MonoBehaviour
 {
     public enum DoorOpenMode
     {
+        Up,         // <-- BARU: Animasi ke atas
         Down,
         Left,
         Right,
@@ -12,7 +13,7 @@ public class DoorController : MonoBehaviour
     }
 
     [Header("Mode Pintu")]
-    public DoorOpenMode openMode = DoorOpenMode.Down;
+    public DoorOpenMode openMode = DoorOpenMode.Up; // Sekarang defaultnya ke atas
 
     [Header("Pengaturan Gerak")]
     public float extraOpenDistance = 0.5f;
@@ -24,6 +25,8 @@ public class DoorController : MonoBehaviour
     private Collider2D doorCollider;
     private SpriteRenderer spriteRenderer;
     private Coroutine moveCoroutine;
+
+    public bool disableCollider = true;
 
     void Start()
     {
@@ -41,6 +44,9 @@ public class DoorController : MonoBehaviour
 
         switch (openMode)
         {
+            case DoorOpenMode.Up: // <-- BARU: Logika agar pintu naik ke atas
+                return closedPosition + Vector3.up * (doorHeight + extraOpenDistance);
+
             case DoorOpenMode.Down:
                 return closedPosition + Vector3.down * (doorHeight + extraOpenDistance);
 
@@ -97,7 +103,7 @@ public class DoorController : MonoBehaviour
             if (spriteRenderer != null)
                 spriteRenderer.enabled = !open;
 
-            if (doorCollider != null)
+            if (doorCollider != null && !disableCollider)
                 doorCollider.enabled = !open;
 
             return;
@@ -135,7 +141,7 @@ public class DoorController : MonoBehaviour
         transform.position = targetPosition;
 
         // collider baru mati setelah pintu benar-benar terbuka
-        if (opening && doorCollider != null)
+        if (opening && doorCollider != null && disableCollider)
         {
             doorCollider.enabled = false;
         }

@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         // Mengambil semua SpriteRenderer dari player dan child-nya
-        // Contoh: badan, mata, pupil, dan asset visual lain
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
 
         currentHealth = maxHealth;
@@ -60,14 +59,14 @@ public class PlayerController : MonoBehaviour
             backgroundRotate.Rotate(0f, 0f, rotasiArah * rotasiSpeed * Time.deltaTime);
         }
 
-        // 3. FLIP ARAH SERANGAN
+        // 3. FLIP ARAH KARAKTER
         if (moveInput > 0 && !isFacingRight)
         {
-            Flip();
+            Flip(); // Hadap Kanan
         }
         else if (moveInput < 0 && isFacingRight)
         {
-            Flip();
+            Flip(); // Hadap Kiri (Klik A)
         }
 
         // 4. LOMPAT
@@ -91,14 +90,18 @@ public class PlayerController : MonoBehaviour
 
     private void Flip()
     {
+        // Mengubah status arah hadap
         isFacingRight = !isFacingRight;
 
-        // Membalik posisi hitbox serangan ke arah player menghadap
-        if (punchHitbox != null)
-        {
-            Vector3 pos = punchHitbox.transform.localPosition;
-            punchHitbox.transform.localPosition = new Vector3(-pos.x, pos.y, pos.z);
-        }
+        // Membalikkan visual seluruh karakter (termasuk mata, pupil, dll)
+        Vector3 characterScale = transform.localScale;
+        characterScale.x *= -1; // Mengubah skala X menjadi minus untuk membalik gambar
+        transform.localScale = characterScale;
+
+        // Catatan: Karena punchHitbox biasanya ada di dalam Player (sebagai Child),
+        // saat Player dibalik menggunakan transform.localScale di atas,
+        // posisi hitbox otomatis ikut berbalik dengan sempurna.
+        // Jadi kita tidak perlu lagi memindahkan manual posisi X hitbox-nya.
     }
 
     private IEnumerator AttackRoutine()
@@ -137,7 +140,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Menyentuh duri / trap / shuriken kalau pakai tag Duri
+        // Menyentuh duri / trap / shuriken
         if (collision.gameObject.CompareTag("Duri") && !isInvincible)
         {
             TakeDamage(1);
@@ -168,9 +171,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator InvincibleRoutine()
     {
         isInvincible = true;
-
         yield return new WaitForSeconds(invincibleTime);
-
         isInvincible = false;
     }
 
@@ -180,24 +181,16 @@ public class PlayerController : MonoBehaviour
 
         for (int i = 0; i < blinkCount; i++)
         {
-            // Matikan semua sprite visual player
             foreach (SpriteRenderer sr in spriteRenderers)
             {
-                if (sr != null)
-                {
-                    sr.enabled = false;
-                }
+                if (sr != null) sr.enabled = false;
             }
 
             yield return new WaitForSeconds(0.1f);
 
-            // Hidupkan semua sprite visual player
             foreach (SpriteRenderer sr in spriteRenderers)
             {
-                if (sr != null)
-                {
-                    sr.enabled = true;
-                }
+                if (sr != null) sr.enabled = true;
             }
 
             yield return new WaitForSeconds(0.1f);
