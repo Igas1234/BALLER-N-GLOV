@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     [Header("Referensi")]
 
     private Rigidbody2D rb;
-    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer[] spriteRenderers;
     private bool isFacingRight = true;
     private PlayerAnimator playerAnimator;
 
@@ -32,14 +32,18 @@ public class PlayerController : MonoBehaviour
     {
         playerAnimator = GetComponent<PlayerAnimator>();
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // Mengambil semua SpriteRenderer dari player dan child-nya
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
 
         currentHealth = maxHealth;
 
         if (punchHitbox != null)
+        {
             punchHitbox.SetActive(false);
 
         isGrounded = false;
+        }
     }
 
     void Update()
@@ -53,52 +57,76 @@ public class PlayerController : MonoBehaviour
         if (moveInput > 0 && !isFacingRight) Flip();
         else if (moveInput < 0 && isFacingRight) Flip();
 
-        // 2. LOMPAT
+        // 4. LOMPAT
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
 
-        // 3. MENONJOK
+        // 5. MENYERANG
         if (Input.GetMouseButtonDown(0) && !isAttacking)
+        {
             StartCoroutine(AttackRoutine());
+        }
     }
 
     private void Flip()
     {
+        // Mengubah status arah hadap
         isFacingRight = !isFacingRight;
 
-        if (punchHitbox != null)
-        {
-            Vector3 pos = punchHitbox.transform.localPosition;
-            punchHitbox.transform.localPosition = new Vector3(-pos.x, pos.y, pos.z);
-        }
+        // Membalikkan visual seluruh karakter (termasuk mata, pupil, dll)
+        Vector3 characterScale = transform.localScale;
+        characterScale.x *= -1; // Mengubah skala X menjadi minus untuk membalik gambar
+        transform.localScale = characterScale;
+
+        // Catatan: Karena punchHitbox biasanya ada di dalam Player (sebagai Child),
+        // saat Player dibalik menggunakan transform.localScale di atas,
+        // posisi hitbox otomatis ikut berbalik dengan sempurna.
+        // Jadi kita tidak perlu lagi memindahkan manual posisi X hitbox-nya.
     }
 
     private IEnumerator AttackRoutine()
     {
         isAttacking = true;
-        punchHitbox.SetActive(true);
+
+        if (punchHitbox != null)
+        {
+            punchHitbox.SetActive(true);
+        }
 
         yield return new WaitForSeconds(attackDuration);
 
-        punchHitbox.SetActive(false);
+        if (punchHitbox != null)
+        {
+            punchHitbox.SetActive(false);
+        }
+
         isAttacking = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // Menyentuh lantai
         if (collision.gameObject.CompareTag("Lantai"))
+        {
             isGrounded = true;
+        }
 
+        // Menyentuh musuh
         if (collision.gameObject.CompareTag("Musuh") && !isInvincible)
+        {
             TakeDamage(1);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // Menyentuh duri / trap / shuriken
         if (collision.gameObject.CompareTag("Duri") && !isInvincible)
+        {
             TakeDamage(1);
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -142,9 +170,18 @@ public class PlayerController : MonoBehaviour
 
         for (int i = 0; i < blinkCount; i++)
         {
-            spriteRenderer.enabled = false;
+            foreach (SpriteRenderer sr in spriteRenderers)
+            {
+                if (sr != null) sr.enabled = false;
+            }
+
             yield return new WaitForSeconds(0.1f);
-            spriteRenderer.enabled = true;
+
+            foreach (SpriteRenderer sr in spriteRenderers)
+            {
+                if (sr != null) sr.enabled = true;
+            }
+
             yield return new WaitForSeconds(0.1f);
         }
     }
