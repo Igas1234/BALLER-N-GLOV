@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 409755111934993486}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.91, y: 0.14, z: 0}
+  m_LocalPosition: {x: 1.91, y: 0.06, z: 0}
   m_LocalScale: {x: 1.023548, y: 1.0235482, z: 1.023548}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 39896016097138511}
   m_Layer: 0
   m_Name: Circle
-  m_TagString: Serangan
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -260,8 +260,6 @@ MonoBehaviour:
   maxHealth: 3
   currentHealth: 0
   invincibleTime: 1
-  backgroundRotate: {fileID: 7998753565409523227}
-  rotasiSpeed: 300
 --- !u!95 &2230090786177787882
 Animator:
   serializedVersion: 5
@@ -321,7 +319,7 @@ Transform:
   m_GameObject: {fileID: 1485871075195293292}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3399995, y: 0.109999605, z: 0}
+  m_LocalPosition: {x: 0.3399995, y: 0.029999986, z: 0}
   m_LocalScale: {x: 1.023548, y: 1.0235482, z: 1.023548}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -575,7 +573,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -3.424, y: -0.081, z: 0}
-  m_LocalScale: {x: -2.1837623, y: -2.1385584, z: 1}
+  m_LocalScale: {x: -2.1837623, y: -2.138558, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7527333801099923065}
@@ -623,7 +621,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

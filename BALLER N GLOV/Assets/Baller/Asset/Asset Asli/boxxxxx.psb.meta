@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d31fca13ab7a6b643a23d9a26e11c488
+guid: a5b8250dbd7434b4c8250acea749284c
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -71,18 +71,18 @@ ScriptedImporter:
     textureFormatSet: 0
     applyGammaDecoding: 0
   spriteImportData:
-  - name: Karakter_1
+  - name: 
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
-      width: 424
-      height: 424
-    spriteID: 053e7cb0d2be70b4e8f9c51ce9ecba26
+      width: 0
+      height: 0
+    spriteID: 
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -94,28 +94,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: pupilmata
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 314
-      y: 436
-      width: 80
-      height: 137
-    spriteID: 2eb3778ca3ef1f84cb75720de53c57e6
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 314, y: 436}
-    spritePosition: {x: 172, y: 143}
-  - name: mata
+  - name: <Group>
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -123,10 +102,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 436
-      width: 302
-      height: 276
-    spriteID: 1e6cff66bc8c5f444aab01ec5749f020
+      y: 511
+      width: 498
+      height: 498
+    spriteID: 3f3c7b1bc6259424e976ebeee6479ac4
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -134,9 +113,30 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 436}
-    spritePosition: {x: 61, y: 74}
-  - name: Background
+    uvTransform: {x: 4, y: 511}
+    spritePosition: {x: 0, y: 648}
+  - name: <Group>
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 510
+      y: 4
+      width: 498
+      height: 498
+    spriteID: fac31afd6f3cdfa4aa2e9aa16efd74e5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 510, y: 4}
+    spritePosition: {x: 669, y: 17}
+  - name: <Group>
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -145,9 +145,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 424
-      height: 424
-    spriteID: 2c4d66ec8c44ccf4d9d14f4c2eec6cda
+      width: 498
+      height: 499
+    spriteID: 524ed37370498c544abcf26e2d5572f8
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -156,19 +156,19 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
-    spritePosition: {x: 0, y: 0}
-  - name: tangan
+    spritePosition: {x: 23, y: 0}
+  - name: <Group>
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 720
-      width: 292
-      height: 274
-    spriteID: 17973e2783bb6d447974c47bfe5690f9
+      x: 510
+      y: 510
+      width: 498
+      height: 497
+    spriteID: b510b63374bb8be46aaf15b051201ac8
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -176,8 +176,8 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 720}
-    spritePosition: {x: 66, y: 75}
+    uvTransform: {x: 510, y: 510}
+    spritePosition: {x: 696, y: 646}
   characterData:
     bones: []
     parts: []
@@ -193,31 +193,7 @@ ScriptedImporter:
     characterGroups: []
     pivot: {x: 0, y: 0}
     boneReadOnly: 0
-  platformSettings:
-  - name: DefaultTexturePlatform
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: Standalone
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
+  platformSettings: []
   mosaicLayers: 1
   characterMode: 1
   documentPivot: {x: 0, y: 0}
@@ -238,50 +214,90 @@ ScriptedImporter:
   resliceFromLayer: 0
   mosaicPSDLayers: []
   rigPSDLayers:
-  - name: pupilmata
-    spriteName: pupilmata
-    isGroup: 0
+  - name: 4
+    spriteName: 
+    isGroup: 1
     parentIndex: -1
-    spriteID: 2eb3778ca3ef1f84cb75720de53c57e6
-    layerID: 2
-    mosaicPosition: {x: 314, y: 436}
+    spriteID: e1a65c0a450333349b4d7942707ff0bb
+    layerID: 12
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 1
+  - name: <Group>
+    spriteName: <Group>
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 3f3c7b1bc6259424e976ebeee6479ac4
+    layerID: 11
+    mosaicPosition: {x: 4, y: 511}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: mata
-    spriteName: mata
-    isGroup: 0
+  - name: 3
+    spriteName: 
+    isGroup: 1
     parentIndex: -1
-    spriteID: 1e6cff66bc8c5f444aab01ec5749f020
+    spriteID: 8cf4e859dfa60b9488c86fb9bb3687c5
+    layerID: 9
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 1
+  - name: <Group>
+    spriteName: <Group>
+    isGroup: 0
+    parentIndex: 2
+    spriteID: fac31afd6f3cdfa4aa2e9aa16efd74e5
+    layerID: 8
+    mosaicPosition: {x: 510, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: 2
+    spriteName: 
+    isGroup: 1
+    parentIndex: -1
+    spriteID: 00210a5fe897f9841ad9d23d8de0b04c
+    layerID: 6
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 1
+  - name: <Group>
+    spriteName: <Group>
+    isGroup: 0
+    parentIndex: 4
+    spriteID: 524ed37370498c544abcf26e2d5572f8
     layerID: 5
-    mosaicPosition: {x: 4, y: 436}
-    flatten: 0
-    isImported: 1
-    isVisible: 1
-  - name: Background
-    spriteName: Background
-    isGroup: 0
-    parentIndex: -1
-    spriteID: 2c4d66ec8c44ccf4d9d14f4c2eec6cda
-    layerID: 1
     mosaicPosition: {x: 4, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: tangan
-    spriteName: tangan
-    isGroup: 0
+  - name: 1
+    spriteName: 
+    isGroup: 1
     parentIndex: -1
-    spriteID: 17973e2783bb6d447974c47bfe5690f9
+    spriteID: f4115eb14856ecf4ab58bf7f618af6c8
     layerID: 3
-    mosaicPosition: {x: 4, y: 720}
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 1
+  - name: <Group>
+    spriteName: <Group>
+    isGroup: 0
+    parentIndex: 6
+    spriteID: b510b63374bb8be46aaf15b051201ac8
+    layerID: 2
+    mosaicPosition: {x: 510, y: 510}
     flatten: 0
     isImported: 1
     isVisible: 1
   sharedRigPSDLayers: []
   pSDLayerImportSetting: []
   importFileNodeState: 1
-  platformSettingsDirtyTick: 639152270689698209
+  platformSettingsDirtyTick: 0
   spriteSizeExpandChanged: 0
   generateGOHierarchy: 0
   textureAssetName: 
