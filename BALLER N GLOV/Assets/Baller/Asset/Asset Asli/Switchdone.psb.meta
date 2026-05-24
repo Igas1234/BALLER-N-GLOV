@@ -94,7 +94,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: <Group>
+  - name: Switchdone_0
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -102,31 +102,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 4
-      width: 991
-      height: 180
-    spriteID: f0ed7a2f43273c8449bedb4bf25e9a8d
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 4, y: 4}
-    spritePosition: {x: 0, y: 0}
-  - name: <Group>
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 776
+      y: 777
       width: 78
-      height: 36
-    spriteID: 973719402b48da940a3da0699ca3cec2
+      height: 35
+    spriteID: 87415b972d7bd3448a5a43a28580b21d
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -134,51 +113,9 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 776}
-    spritePosition: {x: 544, y: 754}
-  - name: <Group>
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 192
-      width: 271
-      height: 576
-    spriteID: a7a97b2f48732bf4ebcc2eb66882556c
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 4, y: 192}
-    spritePosition: {x: 356, y: 214}
-  - name: <Group>
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 283
-      y: 192
-      width: 358
-      height: 346
-    spriteID: 4972ab56524881341872b0b178a1d584
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 283, y: 192}
-    spritePosition: {x: 452, y: 762}
-  - name: <Group>
+    uvTransform: {x: 4, y: 777}
+    spritePosition: {x: 0, y: 0}
+  - name: Switchdone_1
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -189,7 +126,7 @@ ScriptedImporter:
       y: 546
       width: 348
       height: 335
-    spriteID: 441cabe9116b8a245af0de28e66ec70a
+    spriteID: 1252b9c0dd3203e40aeb5afd5fa90a9d
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -198,8 +135,50 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 283, y: 546}
-    spritePosition: {x: 457, y: 767}
-  - name: <Group>
+    spritePosition: {x: 0, y: 0}
+  - name: Switchdone_2
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 192
+      width: 270
+      height: 576
+    spriteID: c52fda4207b354d4aa9558ced53a3ced
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 192}
+    spritePosition: {x: 0, y: 0}
+  - name: Switchdone_3
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 283
+      y: 192
+      width: 358
+      height: 346
+    spriteID: 7eecbfaf5a39936479174ae24dc31e18
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 283, y: 192}
+    spritePosition: {x: 0, y: 0}
+  - name: Switchdone_4
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -210,7 +189,7 @@ ScriptedImporter:
       y: 192
       width: 348
       height: 335
-    spriteID: 7accfc64670410445b035edab8a713e3
+    spriteID: b9a76aa1dab120e4da94be81513dfbbf
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -219,7 +198,28 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 649, y: 192}
-    spritePosition: {x: 457, y: 767}
+    spritePosition: {x: 0, y: 0}
+  - name: Switchdone_5
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 991
+      height: 180
+    spriteID: dae3f41726dcfd6459d6ad16545738da
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+    spritePosition: {x: 0, y: 0}
   characterData:
     bones: []
     parts: []

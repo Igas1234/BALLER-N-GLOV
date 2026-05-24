@@ -94,7 +94,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: Background
+  - name: rumput_0
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -104,8 +104,8 @@ ScriptedImporter:
       x: 4
       y: 4
       width: 1200
-      height: 639
-    spriteID: fbdf0e2898509d9498905cd9148bbe61
+      height: 638
+    spriteID: be7a6dcf23c619d46a6f33120b49ec83
     spriteBone: []
     spriteOutline: []
     vertices: []
