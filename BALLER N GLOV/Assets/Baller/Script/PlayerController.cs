@@ -22,8 +22,6 @@ public class PlayerController : MonoBehaviour
     private bool isInvincible = false;
 
     [Header("Referensi")]
-    public Transform backgroundRotate;
-    public float rotasiSpeed = 200f;
 
     private Rigidbody2D rb;
     private SpriteRenderer[] spriteRenderers;
@@ -43,42 +41,26 @@ public class PlayerController : MonoBehaviour
         if (punchHitbox != null)
         {
             punchHitbox.SetActive(false);
+
+        isGrounded = false;
         }
     }
 
     void Update()
     {
-        // 1. JALAN
+        //Debug.Log("isGrounded: " + isGrounded);
+
+        // 1. JALAN & FLIP
         float moveInput = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
 
-        // 2. ROTASI BACKGROUND / BOLA
-        if (moveInput != 0 && backgroundRotate != null)
-        {
-            float rotasiArah = moveInput > 0 ? -1f : 1f;
-            backgroundRotate.Rotate(0f, 0f, rotasiArah * rotasiSpeed * Time.deltaTime);
-        }
-
-        // 3. FLIP ARAH KARAKTER
-        if (moveInput > 0 && !isFacingRight)
-        {
-            Flip(); // Hadap Kanan
-        }
-        else if (moveInput < 0 && isFacingRight)
-        {
-            Flip(); // Hadap Kiri (Klik A)
-        }
+        if (moveInput > 0 && !isFacingRight) Flip();
+        else if (moveInput < 0 && isFacingRight) Flip();
 
         // 4. LOMPAT
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            isGrounded = false;
-
-            if (playerAnimator != null)
-            {
-                playerAnimator.TriggerLompat();
-            }
         }
 
         // 5. MENYERANG
@@ -146,6 +128,13 @@ public class PlayerController : MonoBehaviour
             TakeDamage(1);
         }
     }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Lantai"))
+            isGrounded = false;
+    }
+
 
     public void Heal(int amount)
     {
