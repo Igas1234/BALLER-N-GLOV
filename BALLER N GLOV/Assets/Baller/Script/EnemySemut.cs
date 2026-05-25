@@ -1,7 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyLebah : MonoBehaviour
+public class EnemySemut : MonoBehaviour
 {
     [Header("Pengaturan Patroli")]
     public float speed = 3f;
@@ -36,7 +37,7 @@ public class EnemyLebah : MonoBehaviour
         }
 
         Vector3 scale = transform.localScale;
-        scale.x = movingRight ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
+        scale.x = movingRight ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
         transform.localScale = scale;
     }
 

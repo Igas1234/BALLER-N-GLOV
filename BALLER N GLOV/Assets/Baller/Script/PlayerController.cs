@@ -28,8 +28,11 @@ public class PlayerController : MonoBehaviour
     private bool isFacingRight = true;
     private PlayerAnimator playerAnimator;
 
+    private Animator animator;
+
     void Start()
     {
+        animator = GetComponentInChildren<Animator>();
         playerAnimator = GetComponent<PlayerAnimator>();
         rb = GetComponent<Rigidbody2D>();
 
@@ -42,7 +45,7 @@ public class PlayerController : MonoBehaviour
         {
             punchHitbox.SetActive(false);
 
-        isGrounded = false;
+            isGrounded = false;
         }
     }
 
@@ -142,8 +145,9 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Heal! Darah sekarang: " + currentHealth);
     }
 
-    private void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
+        if (isInvincible) return;
         currentHealth -= damage;
         Debug.Log("Player kena damage! Sisa darah: " + currentHealth);
 
@@ -152,9 +156,15 @@ public class PlayerController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Debug.Log("Player mati!");
-            gameObject.SetActive(false);
+            //Debug.Log("Player mati! Animator: " + animator);
+            animator.SetTrigger("mati");
+            StartCoroutine(MatiRoutine());
         }
+    }
+    private IEnumerator MatiRoutine()
+    {
+        yield return new WaitForSeconds(2f); // sesuaikan durasi animasi mati
+        gameObject.SetActive(false);
     }
 
     private IEnumerator InvincibleRoutine()
