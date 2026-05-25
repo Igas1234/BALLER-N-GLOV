@@ -17,6 +17,7 @@ public class PlayerAnimator : MonoBehaviour
 
     void Update()
     {
+         if (playerController.currentHealth <= 0) return;
         float velocityY = rb.velocity.y;
         float moveInput = Input.GetAxisRaw("Horizontal");
         bool isGrounded = playerController.isGrounded;
