@@ -1077,11 +1077,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1817010840494612108, guid: 15ecd5e22b1d85a409f42e2e1578f8ff, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 50.2
+      value: 10.07
       objectReference: {fileID: 0}
     - target: {fileID: 1817010840494612108, guid: 15ecd5e22b1d85a409f42e2e1578f8ff, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.8
+      value: 1.07
       objectReference: {fileID: 0}
     - target: {fileID: 1817010840494612108, guid: 15ecd5e22b1d85a409f42e2e1578f8ff, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7842,18 +7842,6 @@ PrefabInstance:
       value: Lever_01 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5942433620053434560, guid: 8a0adddd8fe5b05449a75d43224dd420, type: 3}
-      propertyPath: targetDoor
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942433620053434560, guid: 8a0adddd8fe5b05449a75d43224dd420, type: 3}
-      propertyPath: jalanRahasia
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942433620053434560, guid: 8a0adddd8fe5b05449a75d43224dd420, type: 3}
-      propertyPath: targetDoors.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942433620053434560, guid: 8a0adddd8fe5b05449a75d43224dd420, type: 3}
       propertyPath: targetDoors.Array.data[0]
       value: 
       objectReference: {fileID: 338579157}
@@ -7981,6 +7969,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1774240894}
     m_Modifications:
+    - target: {fileID: 1601025323098420411, guid: 52e31de57f4e031448abde22c2f611eb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.27999982
+      objectReference: {fileID: 0}
+    - target: {fileID: 1601025323098420411, guid: 52e31de57f4e031448abde22c2f611eb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.534
+      objectReference: {fileID: 0}
     - target: {fileID: 1737158089426947891, guid: 52e31de57f4e031448abde22c2f611eb, type: 3}
       propertyPath: m_Name
       value: Lever_01
@@ -8026,17 +8022,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6362607533337572103, guid: 52e31de57f4e031448abde22c2f611eb, type: 3}
-      propertyPath: jalanRahasia
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6362607533337572103, guid: 52e31de57f4e031448abde22c2f611eb, type: 3}
       propertyPath: scriptKamera
       value: 
       objectReference: {fileID: 1903004351}
     - target: {fileID: 6362607533337572103, guid: 52e31de57f4e031448abde22c2f611eb, type: 3}
       propertyPath: targetDoors.Array.data[0]
       value: 
-      objectReference: {fileID: 546607722}
+      objectReference: {fileID: 0}
+    - target: {fileID: 8260587674562096342, guid: 52e31de57f4e031448abde22c2f611eb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 8260587674562096342, guid: 52e31de57f4e031448abde22c2f611eb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.004
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
