@@ -3,12 +3,22 @@ using UnityEngine;
 
 public class EnemyLebah : MonoBehaviour
 {
+    public enum PatrolMode
+    {
+        Horizontal,
+        Vertical
+    }
+
     [Header("Pengaturan Patroli")]
     public float speed = 3f;
     public float patrolDistance = 3f;
+    public PatrolMode patrolMode = PatrolMode.Horizontal;
+
+    [Header("Arah Sprite")]
+    public bool spriteMenghadapKananSaatScalePositif = true;
 
     private Vector2 startPosition;
-    private bool movingRight = true;
+    private bool movingPositive = true;
     private Animator animator;
     private bool isDead = false;
 
@@ -22,21 +32,74 @@ public class EnemyLebah : MonoBehaviour
     {
         if (isDead) return;
 
-        if (movingRight)
+        if (patrolMode == PatrolMode.Horizontal)
+        {
+            PatrolHorizontal();
+            FlipHorizontal();
+        }
+        else if (patrolMode == PatrolMode.Vertical)
+        {
+            PatrolVertical();
+        }
+    }
+
+    private void PatrolHorizontal()
+    {
+        if (movingPositive)
         {
             transform.Translate(Vector2.right * speed * Time.deltaTime);
+
             if (transform.position.x >= startPosition.x + patrolDistance)
-                movingRight = false;
+            {
+                movingPositive = false;
+            }
         }
         else
         {
             transform.Translate(Vector2.left * speed * Time.deltaTime);
+
             if (transform.position.x <= startPosition.x - patrolDistance)
-                movingRight = true;
+            {
+                movingPositive = true;
+            }
+        }
+    }
+
+    private void PatrolVertical()
+    {
+        if (movingPositive)
+        {
+            transform.Translate(Vector2.up * speed * Time.deltaTime);
+
+            if (transform.position.y >= startPosition.y + patrolDistance)
+            {
+                movingPositive = false;
+            }
+        }
+        else
+        {
+            transform.Translate(Vector2.down * speed * Time.deltaTime);
+
+            if (transform.position.y <= startPosition.y - patrolDistance)
+            {
+                movingPositive = true;
+            }
+        }
+    }
+
+    private void FlipHorizontal()
+    {
+        Vector3 scale = transform.localScale;
+
+        if (spriteMenghadapKananSaatScalePositif)
+        {
+            scale.x = movingPositive ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
+        }
+        else
+        {
+            scale.x = movingPositive ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
         }
 
-        Vector3 scale = transform.localScale;
-        scale.x = movingRight ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
         transform.localScale = scale;
     }
 
@@ -45,15 +108,23 @@ public class EnemyLebah : MonoBehaviour
         if (collision.gameObject.CompareTag("Serangan") && !isDead)
         {
             isDead = true;
-            animator.SetTrigger("mati");
+
+            if (animator != null)
+            {
+                animator.SetTrigger("mati");
+            }
+
             StartCoroutine(MatiRoutine());
         }
 
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+
             if (player != null)
+            {
                 player.TakeDamage(1);
+            }
         }
     }
 
