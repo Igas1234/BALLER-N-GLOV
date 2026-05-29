@@ -1,225 +1,3 @@
-// using UnityEngine;
-// using System.Collections;
-
-// public class PlayerController : MonoBehaviour
-// {
-//     [Header("Pengaturan Gerak")]
-//     public float speed = 7f;
-//     public float jumpForce = 12f;
-
-//     [Header("Deteksi Lantai")]
-//     public Transform groundCheck;
-//     public float groundCheckRadius = 0.2f;
-//     public LayerMask groundLayer;
-//     public bool isGrounded;
-
-//     [Header("Pengaturan Serangan")]
-//     public GameObject punchHitbox;
-//     public float attackDuration = 0.2f;
-//     private bool isAttacking = false;
-
-//     [Header("Pengaturan Health")]
-//     public int maxHealth = 3;
-//     public int currentHealth;
-//     public float invincibleTime = 1f;
-//     private bool isInvincible = false;
-
-//     [Header("Referensi")]
-//     private Rigidbody2D rb;
-//     private SpriteRenderer[] spriteRenderers;
-//     private Animator animator;
-
-//     private float moveInput;
-//     private bool jumpRequest;
-
-//     private float startScaleX;
-//     private int faceDirection = 1; // 1 = kanan, -1 = kiri
-
-//     void Start()
-//     {
-//         rb = GetComponent<Rigidbody2D>();
-//         animator = GetComponent<Animator>();
-//         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-
-//         currentHealth = maxHealth;
-
-//         startScaleX = Mathf.Abs(transform.localScale.x);
-
-//         if (punchHitbox != null)
-//         {
-//             punchHitbox.SetActive(false);
-//         }
-//     }
-
-//     void Update()
-//     {
-//         // Ambil input kiri/kanan
-//         moveInput = Input.GetAxisRaw("Horizontal");
-
-//         // Simpan arah hadap
-//         if (moveInput > 0)
-//         {
-//             faceDirection = 1;
-//         }
-//         else if (moveInput < 0)
-//         {
-//             faceDirection = -1;
-//         }
-
-//         // Ambil input lompat
-//         if (Input.GetKeyDown(KeyCode.Space))
-//         {
-//             jumpRequest = true;
-//         }
-
-//         // Serang
-//         if (Input.GetMouseButtonDown(0) && !isAttacking)
-//         {
-//             StartCoroutine(AttackRoutine());
-//         }
-//     }
-
-//     void FixedUpdate()
-//     {
-//         CheckGrounded();
-
-//         // Gerak horizontal
-//         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
-
-//         // Lompat
-//         if (jumpRequest)
-//         {
-//             if (isGrounded)
-//             {
-//                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-//             }
-
-//             jumpRequest = false;
-//         }
-//     }
-
-//     void LateUpdate()
-//     {
-//         // Ini penting.
-//         // LateUpdate berjalan setelah Animator, jadi arah tidak ditimpa Animator.
-//         Vector3 scale = transform.localScale;
-//         scale.x = startScaleX * faceDirection;
-//         transform.localScale = scale;
-//     }
-
-//     private void CheckGrounded()
-//     {
-//         if (groundCheck == null) return;
-
-//         isGrounded = Physics2D.OverlapCircle(
-//             groundCheck.position,
-//             groundCheckRadius,
-//             groundLayer
-//         );
-//     }
-
-//     private IEnumerator AttackRoutine()
-//     {
-//         isAttacking = true;
-
-//         if (punchHitbox != null)
-//         {
-//             punchHitbox.SetActive(true);
-//         }
-
-//         yield return new WaitForSeconds(attackDuration);
-
-//         if (punchHitbox != null)
-//         {
-//             punchHitbox.SetActive(false);
-//         }
-
-//         isAttacking = false;
-//     }
-
-//     private void OnCollisionEnter2D(Collision2D collision)
-//     {
-//         if (collision.gameObject.CompareTag("Musuh") && !isInvincible)
-//         {
-//             TakeDamage(1);
-//         }
-//     }
-
-//     private void OnTriggerEnter2D(Collider2D collision)
-//     {
-//         if (collision.gameObject.CompareTag("Duri") && !isInvincible)
-//         {
-//             TakeDamage(1);
-//         }
-//     }
-
-//     public void Heal(int amount)
-//     {
-//         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
-//         Debug.Log("Heal! Darah sekarang: " + currentHealth);
-//     }
-
-//     public void TakeDamage(int damage)
-//     {
-//         if (isInvincible) return;
-
-//         currentHealth -= damage;
-//         Debug.Log("Player kena damage! Sisa darah: " + currentHealth);
-
-//         StartCoroutine(DamageBlink());
-//         StartCoroutine(InvincibleRoutine());
-
-//         if (currentHealth <= 0)
-//         {
-//             animator.SetTrigger("mati");
-//             StartCoroutine(MatiRoutine());
-//         }
-//     }
-
-//     private IEnumerator MatiRoutine()
-//     {
-//         yield return new WaitForSeconds(2f);
-//         gameObject.SetActive(false);
-//     }
-
-//     private IEnumerator InvincibleRoutine()
-//     {
-//         isInvincible = true;
-//         yield return new WaitForSeconds(invincibleTime);
-//         isInvincible = false;
-//     }
-
-//     private IEnumerator DamageBlink()
-//     {
-//         int blinkCount = 4;
-
-//         for (int i = 0; i < blinkCount; i++)
-//         {
-//             foreach (SpriteRenderer sr in spriteRenderers)
-//             {
-//                 if (sr != null) sr.enabled = false;
-//             }
-
-//             yield return new WaitForSeconds(0.1f);
-
-//             foreach (SpriteRenderer sr in spriteRenderers)
-//             {
-//                 if (sr != null) sr.enabled = true;
-//             }
-
-//             yield return new WaitForSeconds(0.1f);
-//         }
-//     }
-
-//     private void OnDrawGizmosSelected()
-//     {
-//         if (groundCheck == null) return;
-
-//         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-//     }
-// }
-
-
 using UnityEngine;
 using System.Collections;
 
@@ -230,6 +8,9 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 12f;
 
     [Header("Deteksi Lantai")]
+    public Transform groundCheck;
+    public float groundCheckRadius = 0.2f;
+    public LayerMask groundLayer;
     public bool isGrounded;
 
     [Header("Pengaturan Serangan")]
@@ -244,71 +25,97 @@ public class PlayerController : MonoBehaviour
     private bool isInvincible = false;
 
     [Header("Referensi")]
-
     private Rigidbody2D rb;
     private SpriteRenderer[] spriteRenderers;
-    private bool isFacingRight = true;
-    private PlayerAnimator playerAnimator;
-
     private Animator animator;
+
+    private float moveInput;
+    private bool jumpRequest;
+
+    private float startScaleX;
+    private int faceDirection = 1; // 1 = kanan, -1 = kiri
 
     void Start()
     {
-        animator = GetComponentInChildren<Animator>();
-        playerAnimator = GetComponent<PlayerAnimator>();
         rb = GetComponent<Rigidbody2D>();
-
-        // Mengambil semua SpriteRenderer dari player dan child-nya
+        animator = GetComponent<Animator>();
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
 
         currentHealth = maxHealth;
 
+        startScaleX = Mathf.Abs(transform.localScale.x);
+
         if (punchHitbox != null)
         {
             punchHitbox.SetActive(false);
-
-            isGrounded = false;
         }
     }
 
     void Update()
     {
-        //Debug.Log("isGrounded: " + isGrounded);
+        // Ambil input kiri/kanan
+        moveInput = Input.GetAxisRaw("Horizontal");
 
-        // 1. JALAN & FLIP
-        float moveInput = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
-
-        if (moveInput > 0 && !isFacingRight) Flip();
-        else if (moveInput < 0 && isFacingRight) Flip();
-
-        // 4. LOMPAT
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        // Simpan arah hadap
+        if (moveInput > 0)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            faceDirection = 1;
+        }
+        else if (moveInput < 0)
+        {
+            faceDirection = -1;
         }
 
-        // 5. MENYERANG
+        // Ambil input lompat
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpRequest = true;
+        }
+
+        // Serang
         if (Input.GetMouseButtonDown(0) && !isAttacking)
         {
             StartCoroutine(AttackRoutine());
         }
     }
 
-    private void Flip()
+    void FixedUpdate()
     {
-        // Mengubah status arah hadap
-        isFacingRight = !isFacingRight;
+        CheckGrounded();
 
-        // Membalikkan visual seluruh karakter (termasuk mata, pupil, dll)
-        Vector3 characterScale = transform.localScale;
-        characterScale.x *= -1; // Mengubah skala X menjadi minus untuk membalik gambar
-        transform.localScale = characterScale;
+        // Gerak horizontal
+        rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
 
-        // Catatan: Karena punchHitbox biasanya ada di dalam Player (sebagai Child),
-        // saat Player dibalik menggunakan transform.localScale di atas,
-        // posisi hitbox otomatis ikut berbalik dengan sempurna.
-        // Jadi kita tidak perlu lagi memindahkan manual posisi X hitbox-nya.
+        // Lompat
+        if (jumpRequest)
+        {
+            if (isGrounded)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            }
+
+            jumpRequest = false;
+        }
+    }
+
+    void LateUpdate()
+    {
+        // Ini penting.
+        // LateUpdate berjalan setelah Animator, jadi arah tidak ditimpa Animator.
+        Vector3 scale = transform.localScale;
+        scale.x = startScaleX * faceDirection;
+        transform.localScale = scale;
+    }
+
+    private void CheckGrounded()
+    {
+        if (groundCheck == null) return;
+
+        isGrounded = Physics2D.OverlapCircle(
+            groundCheck.position,
+            groundCheckRadius,
+            groundLayer
+        );
     }
 
     private IEnumerator AttackRoutine()
@@ -332,13 +139,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Menyentuh lantai
-        if (collision.gameObject.CompareTag("Lantai"))
-        {
-            isGrounded = true;
-        }
-
-        // Menyentuh musuh
         if (collision.gameObject.CompareTag("Musuh") && !isInvincible)
         {
             TakeDamage(1);
@@ -347,19 +147,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Menyentuh duri / trap / shuriken
         if (collision.gameObject.CompareTag("Duri") && !isInvincible)
         {
             TakeDamage(1);
         }
     }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Lantai"))
-            isGrounded = false;
-    }
-
 
     public void Heal(int amount)
     {
@@ -370,6 +162,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         if (isInvincible) return;
+
         currentHealth -= damage;
         Debug.Log("Player kena damage! Sisa darah: " + currentHealth);
 
@@ -378,14 +171,14 @@ public class PlayerController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            //Debug.Log("Player mati! Animator: " + animator);
             animator.SetTrigger("mati");
             StartCoroutine(MatiRoutine());
         }
     }
+
     private IEnumerator MatiRoutine()
     {
-        yield return new WaitForSeconds(2f); // sesuaikan durasi animasi mati
+        yield return new WaitForSeconds(2f);
         gameObject.SetActive(false);
     }
 
@@ -417,4 +210,211 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (groundCheck == null) return;
+
+        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+    }
 }
+
+
+// using UnityEngine;
+// using System.Collections;
+
+// public class PlayerController : MonoBehaviour
+// {
+//     [Header("Pengaturan Gerak")]
+//     public float speed = 7f;
+//     public float jumpForce = 12f;
+
+//     [Header("Deteksi Lantai")]
+//     public bool isGrounded;
+
+//     [Header("Pengaturan Serangan")]
+//     public GameObject punchHitbox;
+//     public float attackDuration = 0.2f;
+//     private bool isAttacking = false;
+
+//     [Header("Pengaturan Health")]
+//     public int maxHealth = 3;
+//     public int currentHealth;
+//     public float invincibleTime = 1f;
+//     private bool isInvincible = false;
+
+//     [Header("Referensi")]
+
+//     private Rigidbody2D rb;
+//     private SpriteRenderer[] spriteRenderers;
+//     private bool isFacingRight = true;
+//     private PlayerAnimator playerAnimator;
+
+//     private Animator animator;
+
+//     void Start()
+//     {
+//         animator = GetComponentInChildren<Animator>();
+//         playerAnimator = GetComponent<PlayerAnimator>();
+//         rb = GetComponent<Rigidbody2D>();
+
+//         // Mengambil semua SpriteRenderer dari player dan child-nya
+//         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+
+//         currentHealth = maxHealth;
+
+//         if (punchHitbox != null)
+//         {
+//             punchHitbox.SetActive(false);
+
+//             isGrounded = false;
+//         }
+//     }
+
+//     void Update()
+//     {
+//         //Debug.Log("isGrounded: " + isGrounded);
+
+//         // 1. JALAN & FLIP
+//         float moveInput = Input.GetAxisRaw("Horizontal");
+//         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
+
+//         if (moveInput > 0 && !isFacingRight) Flip();
+//         else if (moveInput < 0 && isFacingRight) Flip();
+
+//         // 4. LOMPAT
+//         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+//         {
+//             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+//         }
+
+//         // 5. MENYERANG
+//         if (Input.GetMouseButtonDown(0) && !isAttacking)
+//         {
+//             StartCoroutine(AttackRoutine());
+//         }
+//     }
+
+//     private void Flip()
+//     {
+//         // Mengubah status arah hadap
+//         isFacingRight = !isFacingRight;
+
+//         // Membalikkan visual seluruh karakter (termasuk mata, pupil, dll)
+//         Vector3 characterScale = transform.localScale;
+//         characterScale.x *= -1; // Mengubah skala X menjadi minus untuk membalik gambar
+//         transform.localScale = characterScale;
+
+//         // Catatan: Karena punchHitbox biasanya ada di dalam Player (sebagai Child),
+//         // saat Player dibalik menggunakan transform.localScale di atas,
+//         // posisi hitbox otomatis ikut berbalik dengan sempurna.
+//         // Jadi kita tidak perlu lagi memindahkan manual posisi X hitbox-nya.
+//     }
+
+//     private IEnumerator AttackRoutine()
+//     {
+//         isAttacking = true;
+
+//         if (punchHitbox != null)
+//         {
+//             punchHitbox.SetActive(true);
+//         }
+
+//         yield return new WaitForSeconds(attackDuration);
+
+//         if (punchHitbox != null)
+//         {
+//             punchHitbox.SetActive(false);
+//         }
+
+//         isAttacking = false;
+//     }
+
+//     private void OnCollisionEnter2D(Collision2D collision)
+//     {
+//         // Menyentuh lantai
+//         if (collision.gameObject.CompareTag("Lantai"))
+//         {
+//             isGrounded = true;
+//         }
+
+//         // Menyentuh musuh
+//         if (collision.gameObject.CompareTag("Musuh") && !isInvincible)
+//         {
+//             TakeDamage(1);
+//         }
+//     }
+
+//     private void OnTriggerEnter2D(Collider2D collision)
+//     {
+//         // Menyentuh duri / trap / shuriken
+//         if (collision.gameObject.CompareTag("Duri") && !isInvincible)
+//         {
+//             TakeDamage(1);
+//         }
+//     }
+
+//     private void OnCollisionExit2D(Collision2D collision)
+//     {
+//         if (collision.gameObject.CompareTag("Lantai"))
+//             isGrounded = false;
+//     }
+
+
+//     public void Heal(int amount)
+//     {
+//         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+//         Debug.Log("Heal! Darah sekarang: " + currentHealth);
+//     }
+
+//     public void TakeDamage(int damage)
+//     {
+//         if (isInvincible) return;
+//         currentHealth -= damage;
+//         Debug.Log("Player kena damage! Sisa darah: " + currentHealth);
+
+//         StartCoroutine(DamageBlink());
+//         StartCoroutine(InvincibleRoutine());
+
+//         if (currentHealth <= 0)
+//         {
+//             //Debug.Log("Player mati! Animator: " + animator);
+//             animator.SetTrigger("mati");
+//             StartCoroutine(MatiRoutine());
+//         }
+//     }
+//     private IEnumerator MatiRoutine()
+//     {
+//         yield return new WaitForSeconds(2f); // sesuaikan durasi animasi mati
+//         gameObject.SetActive(false);
+//     }
+
+//     private IEnumerator InvincibleRoutine()
+//     {
+//         isInvincible = true;
+//         yield return new WaitForSeconds(invincibleTime);
+//         isInvincible = false;
+//     }
+
+//     private IEnumerator DamageBlink()
+//     {
+//         int blinkCount = 4;
+
+//         for (int i = 0; i < blinkCount; i++)
+//         {
+//             foreach (SpriteRenderer sr in spriteRenderers)
+//             {
+//                 if (sr != null) sr.enabled = false;
+//             }
+
+//             yield return new WaitForSeconds(0.1f);
+
+//             foreach (SpriteRenderer sr in spriteRenderers)
+//             {
+//                 if (sr != null) sr.enabled = true;
+//             }
+
+//             yield return new WaitForSeconds(0.1f);
+//         }
+//     }
+// }
