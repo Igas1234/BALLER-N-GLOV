@@ -7,7 +7,7 @@ public class LeverSwitch : MonoBehaviour
     public DoorController[] targetDoors;
 
     [Header("Jalan Rahasia yang Dimunculkan")]
-    public GameObject jalanRahasia;
+    public SecretPathController jalanRahasia;
 
     [Header("Pengaturan Kamera (Cutscene)")]
     public CameraFollow scriptKamera;
@@ -29,23 +29,35 @@ public class LeverSwitch : MonoBehaviour
         {
             targetAsli = scriptKamera.target;
 
+            // Kamera fokus ke pintu pertama kalau ada pintu
             if (targetDoors.Length > 0 && targetDoors[0] != null)
             {
                 scriptKamera.target = targetDoors[0].transform;
                 yield return new WaitForSeconds(1f);
             }
+            // Kalau tidak ada pintu, kamera fokus ke jalan rahasia
+            else if (jalanRahasia != null)
+            {
+                scriptKamera.target = jalanRahasia.transform;
+                yield return new WaitForSeconds(1f);
+            }
         }
 
         OpenAllDoors();
-        if (jalanRahasia != null)
-            jalanRahasia.SetActive(true);
 
-        Debug.Log("Pintu sedang terbuka, kamera menyorot!");
+        if (jalanRahasia != null)
+        {
+            jalanRahasia.OpenPath();
+        }
+
+        Debug.Log("Lever aktif, pintu/jalan rahasia terbuka!");
 
         yield return new WaitForSeconds(waktuTungguKamera);
 
         if (scriptKamera != null && targetAsli != null)
+        {
             scriptKamera.target = targetAsli;
+        }
     }
 
     private void OpenAllDoors()
@@ -53,7 +65,9 @@ public class LeverSwitch : MonoBehaviour
         foreach (DoorController door in targetDoors)
         {
             if (door != null)
+            {
                 door.OpenDoor();
+            }
         }
     }
 
@@ -62,7 +76,12 @@ public class LeverSwitch : MonoBehaviour
         if (collision.CompareTag("Serangan") && !isActivated)
         {
             isActivated = true;
-            animator.SetBool("On", true);
+
+            if (animator != null)
+            {
+                animator.SetBool("On", true);
+            }
+
             StartCoroutine(BukaPintuDenganCutscene());
         }
     }
