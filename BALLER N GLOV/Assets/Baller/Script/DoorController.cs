@@ -5,7 +5,7 @@ public class DoorController : MonoBehaviour
 {
     public enum DoorOpenMode
     {
-        Up,         // <-- BARU: Animasi ke atas
+        Up,
         Down,
         Left,
         Right,
@@ -13,11 +13,15 @@ public class DoorController : MonoBehaviour
     }
 
     [Header("Mode Pintu")]
-    public DoorOpenMode openMode = DoorOpenMode.Up; // Sekarang defaultnya ke atas
+    public DoorOpenMode openMode = DoorOpenMode.Up;
 
     [Header("Pengaturan Gerak")]
     public float extraOpenDistance = 0.5f;
     public float moveSpeed = 3f;
+
+    [Header("Pengaturan Suara")]
+    public bool playSoundOnOpen = true;
+    public bool playSoundOnClose = false;
 
     private Vector3 closedPosition;
     private Vector3 openPosition;
@@ -27,6 +31,8 @@ public class DoorController : MonoBehaviour
     private Coroutine moveCoroutine;
 
     public bool disableCollider = true;
+
+    private bool isOpen = false;
 
     void Start()
     {
@@ -44,7 +50,7 @@ public class DoorController : MonoBehaviour
 
         switch (openMode)
         {
-            case DoorOpenMode.Up: // <-- BARU: Logika agar pintu naik ke atas
+            case DoorOpenMode.Up:
                 return closedPosition + Vector3.up * (doorHeight + extraOpenDistance);
 
             case DoorOpenMode.Down:
@@ -98,6 +104,21 @@ public class DoorController : MonoBehaviour
 
     public void SetOpen(bool open)
     {
+        // Suara pintu hanya bunyi kalau status pintu berubah
+        if (open != isOpen && AudioManager.Instance != null)
+        {
+            if (open && playSoundOnOpen)
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.doorSound);
+            }
+            else if (!open && playSoundOnClose)
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.doorSound);
+            }
+        }
+
+        isOpen = open;
+
         if (openMode == DoorOpenMode.Disappear)
         {
             if (spriteRenderer != null)

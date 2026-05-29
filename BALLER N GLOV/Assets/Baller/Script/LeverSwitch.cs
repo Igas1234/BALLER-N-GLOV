@@ -77,6 +77,12 @@ public class LeverSwitch : MonoBehaviour
         {
             isActivated = true;
 
+            // Suara switch / lever
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.switchSound);
+            }
+
             if (animator != null)
             {
                 animator.SetBool("On", true);

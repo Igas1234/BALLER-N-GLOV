@@ -74648,6 +74648,63 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1001 &266071977
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 362911016038401076, guid: 879a904e6216ac84581034f2e8e1a356, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 211.2617
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911016038401076, guid: 879a904e6216ac84581034f2e8e1a356, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 121.5054
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911016038401076, guid: 879a904e6216ac84581034f2e8e1a356, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.76562333
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911016038401076, guid: 879a904e6216ac84581034f2e8e1a356, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911016038401076, guid: 879a904e6216ac84581034f2e8e1a356, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911016038401076, guid: 879a904e6216ac84581034f2e8e1a356, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911016038401076, guid: 879a904e6216ac84581034f2e8e1a356, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911016038401076, guid: 879a904e6216ac84581034f2e8e1a356, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911016038401076, guid: 879a904e6216ac84581034f2e8e1a356, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911016038401076, guid: 879a904e6216ac84581034f2e8e1a356, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3354919415587433409, guid: 879a904e6216ac84581034f2e8e1a356, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 879a904e6216ac84581034f2e8e1a356, type: 3}
 --- !u!1 &272895205
 GameObject:
   m_ObjectHideFlags: 0
@@ -75316,6 +75373,8 @@ MonoBehaviour:
   hiddenOffsetY: -9
   moveSpeed: 3
   hiddenOnStart: 1
+  playSoundOnOpen: 1
+  playSoundOnClose: 0
 --- !u!4 &292781090 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7226599760840352405, guid: 537163c2b15fa084280ea4488e2531e0, type: 3}
@@ -75492,10 +75551,6 @@ PrefabInstance:
     - target: {fileID: 7293110550375004228, guid: f19d4ca136c51ab41928157ab175d86c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7628438810816019645, guid: f19d4ca136c51ab41928157ab175d86c, type: 3}
-      propertyPath: patrolMode
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -76338,6 +76393,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door
       objectReference: {fileID: 0}
+    - target: {fileID: 6249115089594622686, guid: a7932d18a9556794ca2dbf983a440687, type: 3}
+      propertyPath: extraOpenDistance
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -76513,10 +76572,6 @@ PrefabInstance:
     - target: {fileID: 7293110550375004228, guid: f19d4ca136c51ab41928157ab175d86c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7628438810816019645, guid: f19d4ca136c51ab41928157ab175d86c, type: 3}
-      propertyPath: patrolMode
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -76698,11 +76753,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1817010840494612108, guid: 15ecd5e22b1d85a409f42e2e1578f8ff, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.9
+      value: 23.23
       objectReference: {fileID: 0}
     - target: {fileID: 1817010840494612108, guid: 15ecd5e22b1d85a409f42e2e1578f8ff, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.6
+      value: 2.41
       objectReference: {fileID: 0}
     - target: {fileID: 1817010840494612108, guid: 15ecd5e22b1d85a409f42e2e1578f8ff, type: 3}
       propertyPath: m_LocalPosition.z
@@ -77178,3 +77233,4 @@ SceneRoots:
   - {fileID: 453049152}
   - {fileID: 104680428}
   - {fileID: 762725186}
+  - {fileID: 266071977}

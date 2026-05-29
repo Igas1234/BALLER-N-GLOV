@@ -43,12 +43,23 @@ public class EnemySemut : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Serangan") && !isDead)
-        {
-            isDead = true;
-            animator.SetTrigger("mati");
-            StartCoroutine(MatiRoutine());
-        }
+       if (collision.gameObject.CompareTag("Serangan") && !isDead)
+{
+    isDead = true;
+
+    // Suara enemy mati
+    if (AudioManager.Instance != null)
+    {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.enemyDeath);
+    }
+
+    if (animator != null)
+    {
+        animator.SetTrigger("mati");
+    }
+
+    StartCoroutine(MatiRoutine());
+}
 
         if (collision.gameObject.CompareTag("Player"))
         {

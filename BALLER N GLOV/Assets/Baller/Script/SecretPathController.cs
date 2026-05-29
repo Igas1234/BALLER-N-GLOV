@@ -19,12 +19,18 @@ public class SecretPathController : MonoBehaviour
     [Header("Pengaturan Awal")]
     public bool hiddenOnStart = true;
 
+    [Header("Pengaturan Suara")]
+    public bool playSoundOnOpen = true;
+    public bool playSoundOnClose = false;
+
     private Vector3 shownPosition;
     private Vector3 hiddenPosition;
 
     private Renderer pathRenderer;
     private Collider2D[] pathColliders;
     private Coroutine moveCoroutine;
+
+    private bool isOpen = false;
 
     void Start()
     {
@@ -52,6 +58,12 @@ public class SecretPathController : MonoBehaviour
                 SetVisible(false);
                 SetCollider(false);
             }
+
+            isOpen = false;
+        }
+        else
+        {
+            isOpen = true;
         }
     }
 
@@ -67,6 +79,21 @@ public class SecretPathController : MonoBehaviour
 
     public void SetOpen(bool open)
     {
+        // Suara jalan rahasia / pintu hanya bunyi kalau status berubah
+        if (open != isOpen && AudioManager.Instance != null)
+        {
+            if (open && playSoundOnOpen)
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.doorSound);
+            }
+            else if (!open && playSoundOnClose)
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.doorSound);
+            }
+        }
+
+        isOpen = open;
+
         if (moveCoroutine != null)
         {
             StopCoroutine(moveCoroutine);

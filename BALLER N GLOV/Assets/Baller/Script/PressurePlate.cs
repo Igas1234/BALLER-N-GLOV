@@ -51,6 +51,12 @@ public class PressurePlate : MonoBehaviour
                 startPosition.z
             );
 
+            // Suara pressure plate hanya saat kotak pertama kali menekan
+            if (insideCount == 1 && AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.pressurePlateSound);
+            }
+
             if (targetDoor != null)
             {
                 targetDoor.SetOpen(true);

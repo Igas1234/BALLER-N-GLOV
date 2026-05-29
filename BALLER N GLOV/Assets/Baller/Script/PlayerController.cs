@@ -109,15 +109,20 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
 
         // Lompat
-        if (jumpRequest)
-        {
-            if (isGrounded)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            }
+       if (jumpRequest)
+{
+    if (isGrounded)
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
-            jumpRequest = false;
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.playerJump);
         }
+    }
+
+    jumpRequest = false;
+}
     }
 
     void LateUpdate()
@@ -140,23 +145,29 @@ public class PlayerController : MonoBehaviour
     }
 
     private IEnumerator AttackRoutine()
+{
+    isAttacking = true;
+
+    // Suara punch / hit saat player menyerang
+    if (AudioManager.Instance != null)
     {
-        isAttacking = true;
-
-        if (punchHitbox != null)
-        {
-            punchHitbox.SetActive(true);
-        }
-
-        yield return new WaitForSeconds(attackDuration);
-
-        if (punchHitbox != null)
-        {
-            punchHitbox.SetActive(false);
-        }
-
-        isAttacking = false;
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.playerHit);
     }
+
+    if (punchHitbox != null)
+    {
+        punchHitbox.SetActive(true);
+    }
+
+    yield return new WaitForSeconds(attackDuration);
+
+    if (punchHitbox != null)
+    {
+        punchHitbox.SetActive(false);
+    }
+
+    isAttacking = false;
+}
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -187,22 +198,31 @@ public class PlayerController : MonoBehaviour
     }
 
     public void TakeDamage(int damage)
+{
+    if (isInvincible || isDead) return;
+
+    currentHealth -= damage;
+    Debug.Log("Player kena damage! Sisa darah: " + currentHealth);
+
+    if (currentHealth <= 0)
     {
-        if (isInvincible || isDead) return;
-
-        currentHealth -= damage;
-        Debug.Log("Player kena damage! Sisa darah: " + currentHealth);
-
-        if (currentHealth <= 0)
+        if (AudioManager.Instance != null)
         {
-            StartCoroutine(RespawnRoutine());
-            return;
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.playerDeath);
         }
 
-        StartCoroutine(DamageBlink());
-        StartCoroutine(InvincibleRoutine());
+        StartCoroutine(RespawnRoutine());
+        return;
     }
 
+    if (AudioManager.Instance != null)
+    {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.playerHit);
+    }
+
+    StartCoroutine(DamageBlink());
+    StartCoroutine(InvincibleRoutine());
+}
     private IEnumerator RespawnRoutine()
     {
         isDead = true;
