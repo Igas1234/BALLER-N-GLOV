@@ -7,36 +7,45 @@ using UnityEditor;
 
 public class PauseMenuController : MonoBehaviour
 {
-    [Header("Panel Pause")]
-    public GameObject pausePanel;
+    [Header("UI Pause")]
+    public GameObject pauseButton; // Tombol icon pause saat game berjalan
+    public GameObject pausePanel;  // Panel menu pause horizontal
 
     private bool isPaused = false;
 
     void Start()
     {
-        // Saat game mulai, pause panel disembunyikan
+        Time.timeScale = 1f;
+        isPaused = false;
+
+        if (pauseButton != null)
+        {
+            pauseButton.SetActive(true);
+        }
+
         if (pausePanel != null)
         {
             pausePanel.SetActive(false);
         }
-
-        Time.timeScale = 1f;
-        isPaused = false;
     }
 
     void Update()
     {
-        // Tekan ESC untuk pause / lanjut
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isPaused)
-            {
-                StartGame();
-            }
-            else
-            {
-                PauseGame();
-            }
+            TogglePause();
+        }
+    }
+
+    public void TogglePause()
+    {
+        if (isPaused)
+        {
+            ResumeGame();
+        }
+        else
+        {
+            PauseGame();
         }
     }
 
@@ -44,32 +53,46 @@ public class PauseMenuController : MonoBehaviour
     {
         isPaused = true;
 
+        if (pauseButton != null)
+        {
+            pauseButton.SetActive(false);
+        }
+
         if (pausePanel != null)
         {
             pausePanel.SetActive(true);
         }
 
-        // Membekukan game
         Time.timeScale = 0f;
     }
 
-    public void StartGame()
+    public void ResumeGame()
     {
         isPaused = false;
+
+        if (pauseButton != null)
+        {
+            pauseButton.SetActive(true);
+        }
 
         if (pausePanel != null)
         {
             pausePanel.SetActive(false);
         }
 
-        // Melanjutkan game
         Time.timeScale = 1f;
+    }
+
+    // Kalau tombol kamu masih namanya Start, fungsi ini tetap bisa dipakai
+    public void StartGame()
+    {
+        ResumeGame();
     }
 
     public void RestartGame()
     {
-        // Pastikan waktu normal lagi sebelum reload scene
         Time.timeScale = 1f;
+        isPaused = false;
 
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
@@ -78,8 +101,7 @@ public class PauseMenuController : MonoBehaviour
     public void QuitGame()
     {
         Time.timeScale = 1f;
-
-        Debug.Log("Keluar dari game");
+        isPaused = false;
 
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;

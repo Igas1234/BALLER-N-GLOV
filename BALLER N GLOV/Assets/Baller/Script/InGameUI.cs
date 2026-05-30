@@ -1,55 +1,56 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using TMPro;
+using UnityEngine.UI;
 
 public class InGameUI : MonoBehaviour
 {
-    public GameObject pauseMenuUI;
-    public bool isPaused = false;
+    [Header("Referensi Player")]
+    public PlayerController player;
+
+    [Header("UI Nyawa")]
+    public Image heartIcon;
+    public TMP_Text heartText;
+
+    void Start()
+    {
+        CariPlayerJikaKosong();
+        UpdateHealthUI();
+    }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (player == null)
         {
-            TogglePause();
+            CariPlayerJikaKosong();
+        }
+
+        UpdateHealthUI();
+    }
+
+    private void CariPlayerJikaKosong()
+    {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObj != null)
+        {
+            player = playerObj.GetComponent<PlayerController>();
         }
     }
 
-    public void Pause()
+    private void UpdateHealthUI()
     {
-        pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f;
-        isPaused = true;
-    }
-    public void Resume()
-    {
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        isPaused = false;
-    }
+        if (player == null) return;
 
-    public void TogglePause()
-    {
-        if (isPaused)
+        int darahSekarang = Mathf.Clamp(player.currentHealth, 0, player.maxHealth);
+
+        if (heartText != null)
         {
-            Resume();
+            heartText.text = "x " + darahSekarang;
         }
-        else
+
+        if (heartIcon != null)
         {
-            Pause();
+            heartIcon.enabled = true;
         }
-    }
-
-    public void RestartLevel()
-    {
-        Time.timeScale = 1f;
-        isPaused = false;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    public void QuitToMainMenu()
-    {
-        Time.timeScale = 1f;
-        isPaused = false;
-        SceneManager.LoadScene("MainMenu");
     }
 }
