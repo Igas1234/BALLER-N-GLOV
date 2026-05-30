@@ -17,6 +17,15 @@ public class EnemyLebah : MonoBehaviour
     [Header("Arah Sprite")]
     public bool spriteMenghadapKananSaatScalePositif = true;
 
+    [Header("Pengaturan Suara Tawon")]
+    public AudioClip tawonSound;
+    public float tawonVolume = 0.2f;
+    public float jarakMulaiSuara = 5f;
+    public float jarakBerhentiSuara = 6f;
+
+    private AudioSource audioSource;
+    private Transform playerTarget;
+
     private Vector2 startPosition;
     private bool movingPositive = true;
     private Animator animator;
@@ -26,6 +35,14 @@ public class EnemyLebah : MonoBehaviour
     {
         startPosition = transform.position;
         animator = GetComponentInChildren<Animator>();
+
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            playerTarget = playerObj.transform;
+        }
+
+        SetupAudio();
     }
 
     void Update()
@@ -40,6 +57,57 @@ public class EnemyLebah : MonoBehaviour
         else if (patrolMode == PatrolMode.Vertical)
         {
             PatrolVertical();
+        }
+
+        HandleTawonSound();
+    }
+
+    private void SetupAudio()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        // Kalau belum diisi manual, ambil dari AudioManager
+        if (tawonSound == null && AudioManager.Instance != null)
+        {
+            tawonSound = AudioManager.Instance.tawonSound;
+        }
+
+        audioSource.clip = tawonSound;
+        audioSource.loop = true;
+        audioSource.playOnAwake = false;
+        audioSource.volume = tawonVolume;
+
+        // Suara dibuat 2D, jarak kita atur sendiri lewat script
+        audioSource.spatialBlend = 0f;
+    }
+
+    private void HandleTawonSound()
+    {
+        if (playerTarget == null || audioSource == null || tawonSound == null) return;
+
+        float distanceToPlayer = Vector2.Distance(transform.position, playerTarget.position);
+
+        // Kalau player mendekat, suara mulai
+        if (distanceToPlayer <= jarakMulaiSuara)
+        {
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
+        }
+
+        // Kalau player menjauh, suara berhenti
+        if (distanceToPlayer >= jarakBerhentiSuara)
+        {
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
         }
     }
 
@@ -109,6 +177,18 @@ public class EnemyLebah : MonoBehaviour
         {
             isDead = true;
 
+            // Hentikan suara tawon saat mati
+            if (audioSource != null && audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+
+            // Suara enemy mati
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.enemyDeath);
+            }
+
             if (animator != null)
             {
                 animator.SetTrigger("mati");
@@ -117,7 +197,7 @@ public class EnemyLebah : MonoBehaviour
             StartCoroutine(MatiRoutine());
         }
 
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && !isDead)
         {
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
 

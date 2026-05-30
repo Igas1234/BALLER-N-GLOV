@@ -11,9 +11,17 @@ public class ShurikenTrap : MonoBehaviour
     [Header("Rotasi")]
     public float rotateSpeed = 360f;
 
+    [Header("Suara Shuriken")]
+    public AudioClip shurikenSound;
+    public float volume = 0.25f;
+
+    private AudioSource audioSource;
+
     void Start()
     {
         startPosition = transform.position;
+
+        SetupAudio();
     }
 
     void Update()
@@ -46,6 +54,39 @@ public class ShurikenTrap : MonoBehaviour
             {
                 movingRight = true;
             }
+        }
+    }
+
+    private void SetupAudio()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        // Kalau belum diisi manual, ambil dari AudioManager
+        if (shurikenSound == null && AudioManager.Instance != null)
+        {
+            shurikenSound = AudioManager.Instance.shurikenSound;
+        }
+
+        audioSource.clip = shurikenSound;
+        audioSource.loop = true;
+        audioSource.playOnAwake = false;
+        audioSource.volume = volume;
+
+        // 0 = suara 2D, tidak hilang walau player jauh
+        audioSource.spatialBlend = 0f;
+
+        if (shurikenSound != null)
+        {
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning("Shuriken sound belum diisi di Inspector atau AudioManager.");
         }
     }
 }
